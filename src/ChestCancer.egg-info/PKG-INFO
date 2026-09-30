@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: ChestCancer
+Version: 0.0.0
+Summary: CNN based Classifier for Chest Cancer
+Home-page: https://github.com/ShlokBagwe/Chest-Cancer-Classifier
+Author: ShlokBagwe
+Author-email: shlokbagwe.tech@gmail.com
+Project-URL: Bug Tracker, https://github.com/ShlokBagwe/Chest-Cancer-Classifier/issues
+Dynamic: author
+Dynamic: author-email
+Dynamic: home-page
+Dynamic: project-url
+Dynamic: summary
