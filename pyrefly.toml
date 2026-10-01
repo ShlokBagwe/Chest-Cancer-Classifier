@@ -1,0 +1,3 @@
+project-includes = ['**/*.py*', '**/*.ipynb']
+python-interpreter-path = '/home/shlok/miniconda3/envs/chest/bin/python'
+search-path = ['src']

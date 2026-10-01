@@ -1,0 +1,7 @@
+{
+    "python.defaultInterpreterPath": "/home/shlok/miniconda3/envs/chest/bin/python",
+    "python.useEnvironmentsExtension": false,
+    "python.analysis.extraPaths": [
+        "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages"
+    ]
+}
