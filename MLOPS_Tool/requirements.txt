@@ -1,2 +1,3 @@
 mlflow
-dagshub 
+dagshub
+dvc
