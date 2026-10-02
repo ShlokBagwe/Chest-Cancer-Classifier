@@ -49,4 +49,11 @@ def create_directories(path_to_directories: list, verbose=True):
         if verbose:
             logger.info("created directory at: {path}")
 
-    
+
+@ensure_annotations
+def get_size(path: Path) -> str:
+    """
+    get size in KB
+    """
+    size_in_kb = round(os.path.getsize(path)/1024)
+    return f" {size_in_kb} KB"

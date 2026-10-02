@@ -3,11 +3,13 @@ stages:
     cmd: python Pipeline/stage_01.py
     deps:
     - Artifacts/Input.txt
+    - Pipeline/stage_01.py
   
   stage_2:
     cmd: python Pipeline/stage_02.py
     deps:
     - Artifacts/Input.txt
+    - Pipeline/stage_02.py
     outs:
     - Artifacts/Output.txt
 
@@ -15,4 +17,5 @@ stages:
     cmd: python Pipeline/stage_03.py
     deps:
     - Artifacts/Output.txt
+    - python Pipeline/stage_03.py
     
