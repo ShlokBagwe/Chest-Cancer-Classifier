@@ -7,3 +7,12 @@ class DataIngestionConfig:
     source_URL: str
     local_data_file: Path
     unzip_dir: Path
+
+
+@dataclass(frozen=True)
+class DataPreparationConfig:
+    root_dir: Path
+    data_dir: Path
+    prepared_dir: Path
+    splits: list
+    label_prefixes: dict

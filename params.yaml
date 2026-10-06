@@ -1,9 +1,9 @@
 # data preparation
 SPLITS: [train, valid, test]
-adenocarcinoma: adenocarcinoma   # name starts with "adenocarcinoma"  → label "adenocarcinoma"
-large.cell: large_cell           # name starts with "large.cell"      → label "large_cell"
-normal: normal                   # name starts with "normal"          → label "normal"
-squamous.cell: squamous_cell     # name starts with "squamous.cell"   → label "squamous_cell"
+adenocarcinoma: adenocarcinoma   # name starts with "adenocarcinoma"  -> label "adenocarcinoma"
+large.cell: large_cell           # name starts with "large.cell"      -> label "large_cell"
+normal: normal                   # name starts with "normal"          -> label "normal"
+squamous.cell: squamous_cell     # name starts with "squamous.cell"   -> label "squamous_cell"
 
 
 AUGMENTATION: True

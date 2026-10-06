@@ -3,6 +3,7 @@ from ChestCancer.utils.common import read_yaml, create_directories
 from ChestCancer import logger
 
 from ChestCancer.entity.config_entity import DataIngestionConfig
+from ChestCancer.entity.config_entity import DataPreparationConfig
 
 
 class ConfigManager():
@@ -27,12 +28,36 @@ class ConfigManager():
         create_directories([config.root_dir])
 
         data_ingestion_config = DataIngestionConfig(
-            root_dir= config.root_dir,
+            root_dir= Path(config.root_dir),
             source_URL= config.source_URL,
-            local_data_file= config.local_data_file,
-            unzip_dir= config.unzip_dir
+            local_data_file= Path(config.local_data_file),
+            unzip_dir= Path(config.unzip_dir)
         )
     
         return data_ingestion_config
+
+    
+    def get_data_preparation(self) -> DataPreparationConfig:
+        
+        config = self.config.data_preparation # defined in config.yaml
+        params = self.param
+
+        create_directories([config.root_dir])
+
+        data_prepration_config = DataPreparationConfig(
+          root_dir = Path(config.root_dir),
+          data_dir = Path(config.data_dir),
+          prepared_dir= Path(config.prepared_dir),
+          
+          splits= params.SPLITS,
+          label_prefixes= {
+            "adenocarcinoma": params.adenocarcinoma,
+                "large.cell": params["large.cell"], #accessing using brackets due to '.' present
+                "normal": params.normal,
+                "squamous.cell": params["squamous.cell"]
+          } 
+        )
+
+        return data_prepration_config
 
 
