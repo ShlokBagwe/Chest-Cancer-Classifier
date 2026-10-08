@@ -1,3 +1,4 @@
+from ChestCancer.pipeline.stage_03_baseline_model import PrepareBaseModelPipeline
 from ChestCancer.pipeline.stage_01_data_ingestion import DataIngestionPipeline 
 from ChestCancer import logger
 from ChestCancer.pipeline.stage_02_data_preparation import DataPreparationPipeline
@@ -21,6 +22,18 @@ try:
         obj = DataPreparationPipeline()
         obj.main()
         logger.info(f"Stage: {STAGE_NAME_2} finished")
+except Exception as e:
+        logger.exception(e)
+        raise e
+
+
+STAGE_NAME_3 = "Base Model Preparation"
+
+try:
+        logger.info(f"Stage: {STAGE_NAME_3} started")
+        obj = PrepareBaseModelPipeline()
+        obj.main()
+        logger.info(f"Stage: {STAGE_NAME_3} finished")
 except Exception as e:
         logger.exception(e)
         raise e

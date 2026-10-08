@@ -1,17 +1,20 @@
 # data preparation
-SPLITS: [train, valid, test]
-adenocarcinoma: adenocarcinoma   # name starts with "adenocarcinoma"  -> label "adenocarcinoma"
-large.cell: large_cell           # name starts with "large.cell"      -> label "large_cell"
-normal: normal                   # name starts with "normal"          -> label "normal"
-squamous.cell: squamous_cell     # name starts with "squamous.cell"   -> label "squamous_cell"
+data_preparation:
+  SPLITS: [train, valid, test]
+  adenocarcinoma: adenocarcinoma   # name starts with "adenocarcinoma"  -> label "adenocarcinoma"
+  large.cell: large_cell           # name starts with "large.cell"      -> label "large_cell"
+  normal: normal                   # name starts with "normal"          -> label "normal"
+  squamous.cell: squamous_cell     # name starts with "squamous.cell"   -> label "squamous_cell"
 
 
-AUGMENTATION: True
-IMAGE_SIZE: [224,224,3]
-CLASSES: 4
-BATCH_SIZE: 32
-INCLUDE_TOP: False
-EPOCHS: 2
-WEIGHTS: imagenet
-LEARNING_RATE: 0.01
+# baseline model
+baseline_model:
+  AUGMENTATION: True
+  IMAGE_SIZE: [224,224,3]
+  CLASSES: 4
+  BATCH_SIZE: 16
+  INCLUDE_TOP: False
+  EPOCHS: 2
+  WEIGHTS: imagenet
+  LEARNING_RATE: 0.001
 

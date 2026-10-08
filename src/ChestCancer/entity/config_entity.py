@@ -16,3 +16,18 @@ class DataPreparationConfig:
     prepared_dir: Path
     splits: list
     label_prefixes: dict
+
+
+@dataclass(frozen=True)
+class PrepareBaselineModelConfig:
+    root_dir: Path
+    baseline_model_path: Path
+    updated_baseline_model_path: Path
+    params_augmentation: bool
+    params_image_size: list
+    params_classes: int
+    params_batch_size: int
+    params_include_top: bool
+    params_epochs: int
+    params_weights: str
+    params_learning_rate: float

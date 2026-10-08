@@ -14,5 +14,5 @@ data_preparation:
 
 prepare_base_model:
   root_dir: artifacts/base_line_model
-  base_line_model_path: artifacts/base_line_model/base_model.h5
+  baseline_model_path: artifacts/base_line_model/base_model.h5
   updated_baseline_model_path: artifacts/base_line_model/updated_base_model.h5

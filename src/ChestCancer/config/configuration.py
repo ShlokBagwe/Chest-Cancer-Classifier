@@ -4,7 +4,7 @@ from ChestCancer import logger
 
 from ChestCancer.entity.config_entity import DataIngestionConfig
 from ChestCancer.entity.config_entity import DataPreparationConfig
-
+from ChestCancer.entity.config_entity import PrepareBaselineModelConfig
 
 class ConfigManager():
 
@@ -40,7 +40,7 @@ class ConfigManager():
     def get_data_preparation(self) -> DataPreparationConfig:
         
         config = self.config.data_preparation # defined in config.yaml
-        params = self.param
+        params = self.param.data_preparation
 
         create_directories([config.root_dir])
 
@@ -59,5 +59,29 @@ class ConfigManager():
         )
 
         return data_prepration_config
+
+    
+    def get_baseline_model_config(self) -> PrepareBaselineModelConfig:
+
+        config = self.config.prepare_base_model
+        params = self.param.baseline_model
+
+        create_directories([config.root_dir])
+
+        baseline_model_config = PrepareBaselineModelConfig(
+            root_dir=Path(config.root_dir),
+            baseline_model_path=Path(config.baseline_model_path),
+            updated_baseline_model_path=Path(config.updated_baseline_model_path),
+            params_augmentation=params.AUGMENTATION,
+            params_image_size=params.IMAGE_SIZE,
+            params_classes=params.CLASSES,
+            params_batch_size=params.BATCH_SIZE,
+            params_include_top=params.INCLUDE_TOP,
+            params_epochs=params.EPOCHS,
+            params_weights=params.WEIGHTS,
+            params_learning_rate=params.LEARNING_RATE
+        )
+
+        return baseline_model_config
 
 
