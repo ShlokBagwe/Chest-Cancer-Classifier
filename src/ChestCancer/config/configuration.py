@@ -5,6 +5,7 @@ from ChestCancer import logger
 from ChestCancer.entity.config_entity import DataIngestionConfig
 from ChestCancer.entity.config_entity import DataPreparationConfig
 from ChestCancer.entity.config_entity import PrepareBaselineModelConfig
+from ChestCancer.entity.config_entity import TrainingConfig
 
 class ConfigManager():
 
@@ -84,4 +85,27 @@ class ConfigManager():
 
         return baseline_model_config
 
+
+    def get_training_config(self) -> TrainingConfig:
+
+        training_config = self.config.training
+        prepare_base_model_config = self.config.prepare_base_model
+        params = self.param.baseline_model
+
+        create_directories([training_config.root_dir])
+
+        training_config = TrainingConfig(
+            root_dir = Path(training_config.root_dir),
+            training_model_path= Path(training_config.training_model_path),
+            updated_base_model_path= Path(prepare_base_model_config.updated_baseline_model_path),
+            training_data= Path(self.config.data_preparation.prepared_dir),
+            param_epochs= params.EPOCHS,
+            params_patience= params.PATIENCE,
+            params_batch_size= params.BATCH_SIZE,
+            params_is_augmentation= params.AUGMENTATION,
+            params_image_size= params.IMAGE_SIZE,
+            params_learning_rate= params.LEARNING_RATE
+        )
+
+        return training_config
 

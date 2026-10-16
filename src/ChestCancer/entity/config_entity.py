@@ -1,3 +1,4 @@
+from logging import root
 from dataclasses import dataclass # No need of constructor for a class
 from pathlib import Path
 
@@ -30,4 +31,17 @@ class PrepareBaselineModelConfig:
     params_include_top: bool
     params_epochs: int
     params_weights: str
+    params_learning_rate: float
+
+@dataclass(frozen=True)
+class TrainingConfig:
+    root_dir: Path
+    training_model_path: Path
+    updated_base_model_path: Path
+    training_data: Path
+    param_epochs: int
+    params_patience: int
+    params_batch_size: int
+    params_is_augmentation: bool
+    params_image_size: list
     params_learning_rate: float

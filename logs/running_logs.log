@@ -29,3 +29,277 @@
 [2026-10-08 14:33:29,762: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
 [2026-10-08 14:33:30,042: INFO: prepare_baseline_model: Updated base model saved at artifacts/base_line_model/updated_base_model.h5]
 [2026-10-08 14:33:30,042: INFO: main: Stage: Base Model Preparation finished]
+[2026-10-16 11:34:49,953: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 11:34:49,955: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 11:34:49,955: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 11:34:49,955: INFO: common: created directory at: artifacts]
+[2026-10-16 11:34:49,956: INFO: common: created directory at: artifacts/training]
+[2026-10-16 11:35:07,599: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 11:35:07,601: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 11:35:07,601: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 11:35:07,601: INFO: common: created directory at: artifacts]
+[2026-10-16 11:35:07,601: INFO: common: created directory at: artifacts/training]
+[2026-10-16 11:38:05,659: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 11:38:05,660: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 11:38:05,660: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 11:38:05,661: INFO: common: created directory at: artifacts]
+[2026-10-16 11:38:05,661: INFO: common: created directory at: artifacts/training]
+[2026-10-16 11:38:05,661: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 11:38:06,933: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 11:38:06,937: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 11:38:06,938: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 11:38:06,983: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 11:59:21,814: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 11:59:21,816: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 11:59:21,816: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 11:59:21,816: INFO: common: created directory at: artifacts]
+[2026-10-16 11:59:21,817: INFO: common: created directory at: artifacts/training]
+[2026-10-16 11:59:21,817: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 11:59:23,329: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 11:59:23,335: INFO: model_trainer: Model compiled with learning rate: 0.001]
+[2026-10-16 11:59:23,335: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 11:59:23,335: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 11:59:23,371: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 12:37:13,065: INFO: stage_04_model_trainer: Stage: Train Model started]
+[2026-10-16 12:37:13,068: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:37:13,070: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:37:13,071: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:37:13,071: INFO: common: created directory at: artifacts]
+[2026-10-16 12:37:13,071: INFO: common: created directory at: artifacts/training]
+[2026-10-16 12:37:13,071: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 12:37:15,282: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 12:37:15,292: INFO: model_trainer: Model compiled with learning rate: 0.001]
+[2026-10-16 12:37:15,293: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 12:37:15,293: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 12:37:15,365: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 12:37:15,386: INFO: model_trainer: Starting training for up to 2 epochs...]
+[2026-10-16 12:41:29,200: INFO: main: Stage: Data Ingestion started]
+[2026-10-16 12:41:29,203: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:41:29,205: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:41:29,206: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:41:29,207: INFO: common: created directory at: artifacts]
+[2026-10-16 12:41:29,208: INFO: common: created directory at: artifacts/data_ingestion]
+[2026-10-16 12:41:29,208: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1H4hFsXxeo6i5IavjQ0MeLLRC9CZnf_Hw/view?usp=sharing to artifacts/data_ingestion/data.zip]
+[2026-10-16 12:41:34,244: INFO: main: Stage: Data Ingestion finished]
+[2026-10-16 12:41:34,245: INFO: main: Stage: Data Preparation started]
+[2026-10-16 12:41:34,247: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:41:34,249: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:41:34,249: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:41:34,249: INFO: common: created directory at: artifacts]
+[2026-10-16 12:41:34,250: INFO: common: created directory at: artifacts/data_preparation]
+[2026-10-16 12:41:34,251: INFO: data_preparation: Preparing data for split: train]
+[2026-10-16 12:41:34,548: INFO: data_preparation: Split 'train': all 508 files successfully copied to artifacts/data_preparation/prepared/train]
+[2026-10-16 12:41:34,548: INFO: data_preparation: Preparing data for split: valid]
+[2026-10-16 12:41:34,599: INFO: data_preparation: Split 'valid': all 70 files successfully copied to artifacts/data_preparation/prepared/valid]
+[2026-10-16 12:41:34,599: INFO: data_preparation: Preparing data for split: test]
+[2026-10-16 12:41:34,790: INFO: data_preparation: Split 'test': all 269 files successfully copied to artifacts/data_preparation/prepared/test]
+[2026-10-16 12:41:34,791: INFO: main: Stage: Data Preparation finished]
+[2026-10-16 12:41:34,791: INFO: main: Stage: Base Model Preparation started]
+[2026-10-16 12:41:34,793: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:41:34,796: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:41:34,796: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:41:34,796: INFO: common: created directory at: artifacts]
+[2026-10-16 12:41:34,797: INFO: common: created directory at: artifacts/base_line_model]
+[2026-10-16 12:41:37,014: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 12:41:37,274: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 12:41:37,442: INFO: prepare_baseline_model: Updated base model saved at artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 12:41:37,443: INFO: main: Stage: Base Model Preparation finished]
+[2026-10-16 12:41:37,443: INFO: main: Stage: Model Training started]
+[2026-10-16 12:41:37,445: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:41:37,447: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:41:37,447: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:41:37,448: INFO: common: created directory at: artifacts]
+[2026-10-16 12:41:37,450: INFO: common: created directory at: artifacts/training]
+[2026-10-16 12:41:37,451: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 12:41:37,710: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 12:41:37,722: INFO: model_trainer: Model compiled with learning rate: 0.001]
+[2026-10-16 12:41:37,722: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 12:41:37,723: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 12:41:37,814: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 12:41:37,833: INFO: model_trainer: Starting training for up to 2 epochs...]
+[2026-10-16 12:49:07,103: INFO: main: Stage: Data Ingestion started]
+[2026-10-16 12:49:07,105: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:49:07,107: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:49:07,107: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:49:07,108: INFO: common: created directory at: artifacts]
+[2026-10-16 12:49:07,109: INFO: common: created directory at: artifacts/data_ingestion]
+[2026-10-16 12:49:07,109: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1H4hFsXxeo6i5IavjQ0MeLLRC9CZnf_Hw/view?usp=sharing to artifacts/data_ingestion/data.zip]
+[2026-10-16 12:49:10,980: INFO: main: Stage: Data Ingestion finished]
+[2026-10-16 12:49:10,980: INFO: main: Stage: Data Preparation started]
+[2026-10-16 12:49:10,982: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:49:10,984: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:49:10,984: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:49:10,984: INFO: common: created directory at: artifacts]
+[2026-10-16 12:49:10,985: INFO: common: created directory at: artifacts/data_preparation]
+[2026-10-16 12:49:10,985: INFO: data_preparation: Preparing data for split: train]
+[2026-10-16 12:49:11,234: INFO: data_preparation: Split 'train': all 508 files successfully copied to artifacts/data_preparation/prepared/train]
+[2026-10-16 12:49:11,234: INFO: data_preparation: Preparing data for split: valid]
+[2026-10-16 12:49:11,275: INFO: data_preparation: Split 'valid': all 70 files successfully copied to artifacts/data_preparation/prepared/valid]
+[2026-10-16 12:49:11,275: INFO: data_preparation: Preparing data for split: test]
+[2026-10-16 12:49:11,404: INFO: data_preparation: Split 'test': all 269 files successfully copied to artifacts/data_preparation/prepared/test]
+[2026-10-16 12:49:11,404: INFO: main: Stage: Data Preparation finished]
+[2026-10-16 12:49:11,404: INFO: main: Stage: Base Model Preparation started]
+[2026-10-16 12:49:11,407: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:49:11,409: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:49:11,409: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:49:11,409: INFO: common: created directory at: artifacts]
+[2026-10-16 12:49:11,410: INFO: common: created directory at: artifacts/base_line_model]
+[2026-10-16 12:49:13,437: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 12:49:13,669: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 12:49:13,866: INFO: prepare_baseline_model: Updated base model saved at artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 12:49:13,866: INFO: main: Stage: Base Model Preparation finished]
+[2026-10-16 12:49:13,866: INFO: main: Stage: Model Training started]
+[2026-10-16 12:49:13,867: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 12:49:13,869: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 12:49:13,869: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 12:49:13,870: INFO: common: created directory at: artifacts]
+[2026-10-16 12:49:13,870: INFO: common: created directory at: artifacts/training]
+[2026-10-16 12:49:13,871: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 12:49:14,114: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 12:49:14,120: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 12:49:14,120: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 12:49:14,186: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 12:49:14,211: INFO: model_trainer: Model compiled with learning rate: 0.001]
+[2026-10-16 12:49:14,212: INFO: model_trainer: Starting training for up to 30 epochs...]
+[2026-10-16 12:50:35,472: ERROR: main: Graph execution error:
+
+Detected at node StatefulPartitionedCall defined at (most recent call last):
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/main.py", line 47, in <module>
+
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/src/ChestCancer/pipeline/stage_04_model_trainer.py", line 17, in main
+
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/src/ChestCancer/components/model_trainer.py", line 120, in train
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/utils/traceback_utils.py", line 117, in error_handler
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 399, in fit
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 241, in function
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 154, in multi_step_on_iterator
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 125, in wrapper
+
+Out of memory while trying to allocate 1.19GiB.
+	 [[{{node StatefulPartitionedCall}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info. This isn't available when running in Eager mode.
+ [Op:__inference_multi_step_on_iterator_2153]]
+Traceback (most recent call last):
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/main.py", line 47, in <module>
+    obj.main()
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/src/ChestCancer/pipeline/stage_04_model_trainer.py", line 17, in main
+    training.train()
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/src/ChestCancer/components/model_trainer.py", line 120, in train
+    history = self.model.fit(
+              ^^^^^^^^^^^^^^^
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/utils/traceback_utils.py", line 122, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/tensorflow/python/eager/execute.py", line 59, in quick_execute
+    except TypeError as e:
+tensorflow.python.framework.errors_impl.ResourceExhaustedError: Graph execution error:
+
+Detected at node StatefulPartitionedCall defined at (most recent call last):
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/main.py", line 47, in <module>
+
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/src/ChestCancer/pipeline/stage_04_model_trainer.py", line 17, in main
+
+  File "/home/shlok/Personal_Projects/chest-cancer-classifier/Chest-Cancer-Classifier/src/ChestCancer/components/model_trainer.py", line 120, in train
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/utils/traceback_utils.py", line 117, in error_handler
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 399, in fit
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 241, in function
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 154, in multi_step_on_iterator
+
+  File "/home/shlok/miniconda3/envs/chest/lib/python3.11/site-packages/keras/src/backend/tensorflow/trainer.py", line 125, in wrapper
+
+Out of memory while trying to allocate 1.19GiB.
+	 [[{{node StatefulPartitionedCall}}]]
+Hint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info. This isn't available when running in Eager mode.
+ [Op:__inference_multi_step_on_iterator_2153]
+[2026-10-16 13:02:04,516: INFO: main: Stage: Data Ingestion started]
+[2026-10-16 13:02:04,520: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 13:02:04,522: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 13:02:04,522: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 13:02:04,523: INFO: common: created directory at: artifacts]
+[2026-10-16 13:02:04,524: INFO: common: created directory at: artifacts/data_ingestion]
+[2026-10-16 13:02:04,524: INFO: data_ingestion: Downloading data from https://drive.google.com/file/d/1H4hFsXxeo6i5IavjQ0MeLLRC9CZnf_Hw/view?usp=sharing to artifacts/data_ingestion/data.zip]
+[2026-10-16 13:02:08,813: INFO: main: Stage: Data Ingestion finished]
+[2026-10-16 13:02:08,813: INFO: main: Stage: Data Preparation started]
+[2026-10-16 13:02:08,814: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 13:02:08,815: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 13:02:08,815: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 13:02:08,815: INFO: common: created directory at: artifacts]
+[2026-10-16 13:02:08,816: INFO: common: created directory at: artifacts/data_preparation]
+[2026-10-16 13:02:08,816: INFO: data_preparation: Preparing data for split: train]
+[2026-10-16 13:02:08,932: INFO: data_preparation: Split 'train': all 508 files successfully copied to artifacts/data_preparation/prepared/train]
+[2026-10-16 13:02:08,932: INFO: data_preparation: Preparing data for split: valid]
+[2026-10-16 13:02:08,951: INFO: data_preparation: Split 'valid': all 70 files successfully copied to artifacts/data_preparation/prepared/valid]
+[2026-10-16 13:02:08,952: INFO: data_preparation: Preparing data for split: test]
+[2026-10-16 13:02:09,013: INFO: data_preparation: Split 'test': all 269 files successfully copied to artifacts/data_preparation/prepared/test]
+[2026-10-16 13:02:09,013: INFO: main: Stage: Data Preparation finished]
+[2026-10-16 13:02:09,013: INFO: main: Stage: Base Model Preparation started]
+[2026-10-16 13:02:09,014: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 13:02:09,015: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 13:02:09,016: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 13:02:09,016: INFO: common: created directory at: artifacts]
+[2026-10-16 13:02:09,016: INFO: common: created directory at: artifacts/base_line_model]
+[2026-10-16 13:02:10,433: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 13:02:10,623: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 13:02:10,762: INFO: prepare_baseline_model: Updated base model saved at artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 13:02:10,762: INFO: main: Stage: Base Model Preparation finished]
+[2026-10-16 13:02:10,762: INFO: main: Stage: Model Training started]
+[2026-10-16 13:02:10,763: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 13:02:10,764: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 13:02:10,764: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 13:02:10,764: INFO: common: created directory at: artifacts]
+[2026-10-16 13:02:10,765: INFO: common: created directory at: artifacts/training]
+[2026-10-16 13:02:10,765: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 13:02:10,909: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 13:02:10,912: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 13:02:10,912: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 13:02:10,958: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 13:02:10,988: INFO: model_trainer: Model compiled with learning rate: 0.001]
+[2026-10-16 13:02:10,988: INFO: model_trainer: Starting training for up to 30 epochs...]
+[2026-10-16 13:03:20,651: INFO: model_trainer: Training finished]
+[2026-10-16 13:03:20,651: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 13:03:20,821: INFO: model_trainer: Model saved successfully at: artifacts/training/model.h5]
+[2026-10-16 13:03:20,823: INFO: main: Stage: Model Training finished]
+[2026-10-16 13:21:41,246: INFO: stage_04_model_trainer: Stage: Train Model started]
+[2026-10-16 13:21:41,248: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 13:21:41,250: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 13:21:41,250: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 13:21:41,250: INFO: common: created directory at: artifacts]
+[2026-10-16 13:21:41,250: INFO: common: created directory at: artifacts/training]
+[2026-10-16 13:21:41,251: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 13:21:42,688: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 13:21:42,692: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 13:21:42,692: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 13:21:42,725: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 13:21:42,740: INFO: model_trainer: Model compiled with learning rate: 0.001]
+[2026-10-16 13:21:42,740: INFO: model_trainer: Starting training for up to 30 epochs...]
+[2026-10-16 13:22:43,609: INFO: model_trainer: Training finished]
+[2026-10-16 13:22:43,609: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 13:22:43,812: INFO: model_trainer: Model saved successfully at: artifacts/training/model.h5]
+[2026-10-16 13:22:44,278: INFO: model_trainer: Training curves saved at: artifacts/training/training_curves.png]
+[2026-10-16 13:22:44,281: INFO: stage_04_model_trainer: Stage: Train Model finished]
+[2026-10-16 13:42:14,348: INFO: stage_04_model_trainer: Stage: Train Model started]
+[2026-10-16 13:42:14,352: INFO: common: yaml file: [PosixPath('config/config.yaml')]]
+[2026-10-16 13:42:14,353: INFO: common: yaml file: [PosixPath('params.yaml')]]
+[2026-10-16 13:42:14,354: INFO: configuration: Creating artifacts_root directory]
+[2026-10-16 13:42:14,354: INFO: common: created directory at: artifacts]
+[2026-10-16 13:42:14,354: INFO: common: created directory at: artifacts/training]
+[2026-10-16 13:42:14,354: INFO: model_trainer: Loading updated base model from: artifacts/base_line_model/updated_base_model.h5]
+[2026-10-16 13:42:15,778: WARNING: saving_utils: Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.]
+[2026-10-16 13:42:15,783: INFO: model_trainer: Configuring training generator with augmentation and preprocess_input]
+[2026-10-16 13:42:15,783: INFO: model_trainer: Loading training data from: artifacts/data_preparation/prepared/train]
+[2026-10-16 13:42:15,821: INFO: model_trainer: Loading validation data from: artifacts/data_preparation/prepared/valid]
+[2026-10-16 13:42:15,848: INFO: model_trainer: Model compiled with learning rate: 0.0001]
+[2026-10-16 13:42:15,848: INFO: model_trainer: Starting training for up to 30 epochs...]
+[2026-10-16 13:43:52,762: INFO: model_trainer: Training finished]
+[2026-10-16 13:43:52,762: WARNING: saving_api: You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. ]
+[2026-10-16 13:43:52,931: INFO: model_trainer: Model saved successfully at: artifacts/training/model.h5]
+[2026-10-16 13:43:53,392: INFO: model_trainer: Training curves saved at: artifacts/training/training_curves.png]
+[2026-10-16 13:43:53,394: INFO: stage_04_model_trainer: Stage: Train Model finished]
