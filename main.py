@@ -11,6 +11,7 @@ from ChestCancer.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 from ChestCancer import logger
 from ChestCancer.pipeline.stage_02_data_preparation import DataPreparationPipeline
 from ChestCancer.pipeline.stage_04_model_trainer import TrainModelPipeline
+from ChestCancer.pipeline.stage_05_evaluation import EvaluationPipeline
 
 STAGE_NAME = "Data Ingestion"
 
@@ -54,6 +55,17 @@ try:
         obj = TrainModelPipeline()
         obj.main()
         logger.info(f"Stage: {STAGE_NAME_4} finished")
+except Exception as e:
+        logger.exception(e)
+        raise e
+
+
+STAGE_NAME_5 = "Evaluation"
+try:
+        logger.info(f"Stage: {STAGE_NAME_5} started")
+        obj = EvaluationPipeline()
+        obj.main()
+        logger.info(f"Stage: {STAGE_NAME_5} finished")
 except Exception as e:
         logger.exception(e)
         raise e

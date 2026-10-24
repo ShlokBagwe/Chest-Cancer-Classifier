@@ -1,4 +1,3 @@
-from logging import root
 from dataclasses import dataclass # No need of constructor for a class
 from pathlib import Path
 
@@ -45,3 +44,15 @@ class TrainingConfig:
     params_is_augmentation: bool
     params_image_size: list
     params_learning_rate: float
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    path_to_model: Path
+    test_data: Path
+    all_params: dict
+    mlflow_uri: str
+    params_image_size: list
+    params_batch_size: int
+
+
+

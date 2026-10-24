@@ -6,6 +6,8 @@ from ChestCancer.entity.config_entity import DataIngestionConfig
 from ChestCancer.entity.config_entity import DataPreparationConfig
 from ChestCancer.entity.config_entity import PrepareBaselineModelConfig
 from ChestCancer.entity.config_entity import TrainingConfig
+from ChestCancer.entity.config_entity import EvaluationConfig
+
 
 class ConfigManager():
 
@@ -108,4 +110,16 @@ class ConfigManager():
         )
 
         return training_config
+
+    
+    def get_evaluation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            path_to_model=Path("artifacts/training/model.h5"),
+            test_data=Path("artifacts/data_preparation/prepared/test"),
+            mlflow_uri="https://dagshub.com/shlokbagwe.tech/Chest-Cancer-Classifier.mlflow",
+            all_params=self.param.baseline_model,
+            params_image_size=self.param.baseline_model.IMAGE_SIZE,
+            params_batch_size=self.param.baseline_model.BATCH_SIZE,
+        )
+        return eval_config
 

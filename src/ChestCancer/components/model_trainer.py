@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import datetime
 import json
 import matplotlib
 matplotlib.use("Agg")  # Non-interactive backend safe for Linux/WSL
@@ -42,7 +43,7 @@ class Training:
          """
         
         flow = dict(
-            target_size=tuple(self.config.params_image_size[:-1]),  # drop channel: (224, 224)
+            target_size=tuple(self.config.params_image_size[:-1]),  # drop the channel: (224, 224)
             batch_size=self.config.params_batch_size,
             class_mode="categorical",
         )
@@ -142,15 +143,19 @@ class Training:
 
     
     def _save_plot(self, history):
-        """Saves train vs validation loss and accuracy curves as an image."""
-        plot_path = Path(self.config.training_model_path).parent / "training_curves.png"
+        """Saves train vs validation loss and accuracy curves as an image with timestamp."""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        parent_dir = Path(self.config.training_model_path).parent
+        plot_path = parent_dir / f"training_curves_{timestamp}.png"
+        latest_plot_path = parent_dir / "training_curves.png"
+
         plt.figure(figsize=(12, 5))
 
         # 1. Loss Curve
         plt.subplot(1, 2, 1)
         plt.plot(history.history["loss"], label="Train Loss", color="royalblue", linewidth=2)
         plt.plot(history.history["val_loss"], label="Validation Loss", color="darkorange", linewidth=2)
-        plt.title("Loss vs. Epochs", fontsize=12)
+        plt.title(f"Loss vs. Epochs ({timestamp})", fontsize=12)
         plt.xlabel("Epoch")
         plt.ylabel("Loss")
         plt.grid(True, linestyle="--", alpha=0.6)
@@ -160,12 +165,13 @@ class Training:
         plt.subplot(1, 2, 2)
         plt.plot(history.history["accuracy"], label="Train Accuracy", color="royalblue", linewidth=2)
         plt.plot(history.history["val_accuracy"], label="Validation Accuracy", color="darkorange", linewidth=2)
-        plt.title("Accuracy vs. Epochs", fontsize=12)
+        plt.title(f"Accuracy vs. Epochs ({timestamp})", fontsize=12)
         plt.xlabel("Epoch")
         plt.ylabel("Accuracy")
         plt.grid(True, linestyle="--", alpha=0.6)
         plt.legend()
         plt.tight_layout()
         plt.savefig(plot_path, dpi=300)
+        plt.savefig(latest_plot_path, dpi=300)
         plt.close()
-        logger.info(f"Training curves saved at: {plot_path}")
+        logger.info(f"Training curves saved at: {plot_path} and {latest_plot_path}")
