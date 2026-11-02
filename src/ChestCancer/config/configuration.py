@@ -82,7 +82,9 @@ class ConfigManager():
             params_include_top=params.INCLUDE_TOP,
             params_epochs=params.EPOCHS,
             params_weights=params.WEIGHTS,
-            params_learning_rate=params.LEARNING_RATE
+            params_learning_rate=params.LEARNING_RATE,
+            params_head_type=params.HEAD_TYPE,
+            params_dropout_rate=float(params.DROPOUT_RATE)
         )
 
         return baseline_model_config

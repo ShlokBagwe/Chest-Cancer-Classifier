@@ -31,6 +31,8 @@ class PrepareBaselineModelConfig:
     params_epochs: int
     params_weights: str
     params_learning_rate: float
+    params_head_type: str
+    params_dropout_rate: float
 
 @dataclass(frozen=True)
 class TrainingConfig:
