@@ -33,6 +33,7 @@ class PrepareBaselineModelConfig:
     params_learning_rate: float
     params_head_type: str
     params_dropout_rate: float
+    params_unfreeze_from_layer: str
 
 @dataclass(frozen=True)
 class TrainingConfig:

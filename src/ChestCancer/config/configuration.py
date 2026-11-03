@@ -84,7 +84,8 @@ class ConfigManager():
             params_weights=params.WEIGHTS,
             params_learning_rate=params.LEARNING_RATE,
             params_head_type=params.HEAD_TYPE,
-            params_dropout_rate=float(params.DROPOUT_RATE)
+            params_dropout_rate=float(params.DROPOUT_RATE),
+            params_unfreeze_from_layer=str(params.UNFREEZE_FROM_LAYER) if params.UNFREEZE_FROM_LAYER is not None else "None"
         )
 
         return baseline_model_config

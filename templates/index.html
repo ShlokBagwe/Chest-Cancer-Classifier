@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chest Cancer Classifier | AI Diagnosis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+        .header-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 0 30px;
+            margin-bottom: 30px;
+        }
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .upload-area {
+            border: 2px dashed #2a5298;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .upload-area:hover {
+            background-color: #f0f4fa;
+        }
+        .preview-img {
+            max-height: 280px;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: none;
+            margin: 0 auto;
+        }
+        .btn-primary-custom {
+            background-color: #2a5298;
+            border-color: #2a5298;
+            color: white;
+            padding: 10px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+        .btn-primary-custom:hover {
+            background-color: #1e3c72;
+            border-color: #1e3c72;
+            color: white;
+        }
+        .result-box {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .badge-prediction {
+            font-size: 1.25rem;
+            padding: 8px 20px;
+            border-radius: 30px;
+            text-transform: capitalize;
+        }
+        .spinner-border {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header-section text-center">
+        <div class="container">
+            <h1><i class="fa-solid fa-lungs me-2"></i>Chest Cancer Classifier</h1>
+            <p class="lead mb-0">End-to-End Deep Learning CT-Scan Image Classification</p>
+        </div>
+    </header>
+
+    <div class="container pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card p-4">
+                    <h4 class="mb-3 text-center text-secondary">Upload Chest CT-Scan Image</h4>
+                    
+                    <!-- Upload Dropzone -->
+                    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click();">
+                        <i class="fa-solid fa-cloud-arrow-up fa-3x text-primary mb-3"></i>
+                        <h5>Click or drag & drop CT-Scan image here</h5>
+                        <p class="text-muted small">Supports JPG, JPEG, PNG</p>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                        <img id="imagePreview" class="preview-img mt-3" alt="Preview">
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary-custom me-2" id="predictBtn" disabled>
+                            <i class="fa-solid fa-microscope me-2"></i>Analyze & Predict
+                        </button>
+                        <button class="btn btn-outline-secondary" id="resetBtn" style="display: none;">
+                            <i class="fa-solid fa-rotate-left me-1"></i>Reset
+                        </button>
+                    </div>
+
+                    <!-- Loading Spinner -->
+                    <div class="text-center mt-4" id="loadingArea">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2 text-muted small" id="loadingText" style="display: none;">Processing with VGG16 model...</p>
+                    </div>
+
+                    <!-- Result Box -->
+                    <div class="result-box mt-4 bg-light border" id="resultBox">
+                        <h5 class="text-secondary mb-2">Diagnosis Result:</h5>
+                        <div id="resultBadge" class="badge badge-prediction bg-success">Normal</div>
+                    </div>
+                </div>
+
+                <!-- Classes Legend Card -->
+                <div class="card mt-4 p-3 bg-white">
+                    <h6 class="text-secondary mb-2"><i class="fa-solid fa-circle-info me-2"></i>Supported Diagnostic Classes:</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-secondary">Adenocarcinoma</span>
+                        <span class="badge bg-secondary">Large Cell Carcinoma</span>
+                        <span class="badge bg-secondary">Normal</span>
+                        <span class="badge bg-secondary">Squamous Cell Carcinoma</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const imagePreview = document.getElementById('imagePreview');
+        const predictBtn = document.getElementById('predictBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultBox = document.getElementById('resultBox');
+        const resultBadge = document.getElementById('resultBadge');
+        const spinner = document.querySelector('.spinner-border');
+        const loadingText = document.getElementById('loadingText');
+
+        let base64Image = "";
+
+        fileInput.addEventListener('change', function(e) {
+            handleFile(e.target.files[0]);
+        });
+
+        // Drag and drop support
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#e8f0fe';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = '#ffffff';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#ffffff';
+            if (e.dataTransfer.files.length > 0) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                imagePreview.src = event.target.result;
+                imagePreview.style.display = 'block';
+                base64Image = event.target.result.split(',')[1];
+                predictBtn.disabled = false;
+                resetBtn.style.display = 'inline-block';
+                resultBox.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        resetBtn.addEventListener('click', function() {
+            fileInput.value = "";
+            imagePreview.src = "";
+            imagePreview.style.display = 'none';
+            predictBtn.disabled = true;
+            resetBtn.style.display = 'none';
+            resultBox.style.display = 'none';
+            base64Image = "";
+        });
+
+        predictBtn.addEventListener('click', function() {
+            if (!base64Image) return;
+
+            predictBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            loadingText.style.display = 'block';
+            resultBox.style.display = 'none';
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: base64Image })
+            })
+            .then(res => res.json())
+            .then(data => {
+                spinner.style.display = 'none';
+                loadingText.style.display = 'none';
+                predictBtn.disabled = false;
+
+                const prediction = (data && data[0] && data[0].image) ? data[0].image : "Unknown";
+                resultBadge.innerText = prediction.replace('_', ' ');
+
+                if (prediction.toLowerCase() === 'normal') {
+                    resultBadge.className = 'badge badge-prediction bg-success';
+                } else {
+                    resultBadge.className = 'badge badge-prediction bg-danger';
+                }
+
+                resultBox.style.display = 'block';
+            })
+            .catch(err => {
+                console.error(err);
+                spinner.style.display = 'none';
+                loadingText.style.display = 'none';
+                predictBtn.disabled = false;
+                alert("Error during prediction. Please check server logs.");
+            });
+        });
+    </script>
+</body>
+</html>

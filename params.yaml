@@ -16,8 +16,9 @@ baseline_model:
   INCLUDE_TOP: False
   EPOCHS: 30
   WEIGHTS: imagenet
-  LEARNING_RATE: 0.001
+  LEARNING_RATE: 0.00001
   PATIENCE: 5
   HEAD_TYPE: gap
   DROPOUT_RATE: 0.3
+  UNFREEZE_FROM_LAYER: block5_conv1
 

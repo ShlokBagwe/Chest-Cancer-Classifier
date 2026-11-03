@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 import yaml
 import json
+import base64
 from ChestCancer import logger
 from box.exceptions import BoxValueError
 from box import ConfigBox
@@ -71,3 +72,15 @@ def save_json(path: Path, data: dict):
     with open(path, "w") as f:
         json.dump(data, f, indent=4)
     logger.info(f"json file saved at: {path}")
+
+
+def decodeImage(imgstring, fileName):
+    imgdata = base64.b64decode(imgstring)
+    with open(fileName, 'wb') as f:
+        f.write(imgdata)
+        f.close()
+
+
+def encodeImageIntoBase64(croppedImagePath):
+    with open(croppedImagePath, "rb") as f:
+        return base64.b64encode(f.read())

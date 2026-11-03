@@ -1,4 +1,3 @@
-from mlflow.utils.environment import _conda_header
 from ChestCancer.entity.config_entity import PrepareBaselineModelConfig
 from pathlib import Path
 
@@ -25,18 +24,34 @@ class PrepareBaselineModel:
         PrepareBaselineModel.save_model(self.config.baseline_model_path, self.model)
 
     @staticmethod
-    def _prepare_full_model(model: tf.keras.Model, classes: int, learning_rate: float, head_type: str, dropout_rate: float):
-        """Freeze the backbone, add a classification head and compile"""
-        model.trainable = False
+    def _prepare_full_model(model: tf.keras.Model, classes: int, learning_rate: float, head_type: str, dropout_rate: float, unfreeze_from_layer: str = "None"):
+        """Freeze base model (or unfreeze from a specific layer onwards), add a classification head and compile"""
+        target = str(unfreeze_from_layer).strip() if unfreeze_from_layer is not None else "None"
+
+        if target.lower() not in ["none", "null", "false", "0", ""]:
+            layer_names = [layer.name for layer in model.layers]
+            if target in layer_names:
+                unfreeze = False
+                for layer in model.layers:
+                    if layer.name == target:
+                        unfreeze = True
+                    layer.trainable = unfreeze
+                logger.info(f"Unfreezing layers from '{target}' onwards for fine-tuning")
+            else:
+                logger.warning(f"Layer '{target}' not found in base model. Freezing all base layers.")
+                for layer in model.layers:
+                    layer.trainable = False
+        else:
+            for layer in model.layers:
+                layer.trainable = False
+            logger.info("All layers of the base model are frozen")
 
         if head_type == 'gap':
             x = GlobalAveragePooling2D()(model.output)
         elif head_type == 'flatten':
             x = Flatten()(model.output)
         else:
-            raise ValueError(f"Invalid head_type: '{head_type}'.")
-
-
+            raise ValueError(f"Invalid head_type: '{head_type}'. Must be 'gap' or 'flatten'.")
 
         if dropout_rate > 0:
             x = Dropout(dropout_rate)(x)
@@ -60,7 +75,8 @@ class PrepareBaselineModel:
             classes=self.config.params_classes,
             learning_rate=self.config.params_learning_rate,
             head_type=self.config.params_head_type,
-            dropout_rate=self.config.params_dropout_rate
+            dropout_rate=self.config.params_dropout_rate,
+            unfreeze_from_layer=self.config.params_unfreeze_from_layer
         )
 
         self.save_model(path=self.config.updated_baseline_model_path, model=self.full_model)
