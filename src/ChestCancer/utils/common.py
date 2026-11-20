@@ -1,8 +1,9 @@
-from pathlib import Path
 import os
 import yaml
 import json
 import base64
+import random
+from pathlib import Path
 from ChestCancer import logger
 from box.exceptions import BoxValueError
 from box import ConfigBox
@@ -84,3 +85,24 @@ def decodeImage(imgstring, fileName):
 def encodeImageIntoBase64(croppedImagePath):
     with open(croppedImagePath, "rb") as f:
         return base64.b64encode(f.read())
+
+
+def set_seed(seed: int = 42):
+    """
+    Set seeds across Python random, NumPy, and TensorFlow for full reproducibility.
+    """
+    os.environ["PYTHONHASHSEED"] = str(seed)
+    random.seed(seed)
+    try:
+        import numpy as np
+        np.random.seed(seed)
+    except ImportError:
+        pass
+    try:
+        import tensorflow as tf
+        tf.random.set_seed(seed)
+        if hasattr(tf.keras.utils, "set_random_seed"):
+            tf.keras.utils.set_random_seed(seed)
+    except ImportError:
+        pass
+    logger.info(f"Random seed set to: {seed}")

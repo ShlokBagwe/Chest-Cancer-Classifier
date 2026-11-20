@@ -34,6 +34,7 @@ class PrepareBaselineModelConfig:
     params_head_type: str
     params_dropout_rate: float
     params_unfreeze_from_layer: str
+    params_seed: int
 
 @dataclass(frozen=True)
 class TrainingConfig:
@@ -47,6 +48,10 @@ class TrainingConfig:
     params_is_augmentation: bool
     params_image_size: list
     params_learning_rate: float
+    params_seed: int
+    params_augmentation: dict
+    params_class_weights: dict
+    params_reduce_lr: dict
 
 @dataclass(frozen=True)
 class EvaluationConfig:

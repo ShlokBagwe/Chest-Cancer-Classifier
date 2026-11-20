@@ -10,6 +10,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
 from ChestCancer import logger
+from ChestCancer.utils.common import set_seed
 from ChestCancer.entity.config_entity import TrainingConfig
 
 # Prevent cuDNN allocation failures on limited VRAM
@@ -41,6 +42,7 @@ class Training:
         """
          train/valid generators with VGG16 preprocess_input and optional augmentation
          """
+        set_seed(self.config.params_seed)
         
         flow = dict(
             target_size=tuple(self.config.params_image_size[:-1]),  # drop the channel: (224, 224)
@@ -51,15 +53,18 @@ class Training:
         if self.config.params_is_augmentation:
             logger.info("Configuring training generator with augmentation and preprocess_input")
 
+            aug_cfg = self.config.params_augmentation or {}
             aug = dict(
-                rotation_range=20,
-                horizontal_flip=True,
-                width_shift_range=0.2,
-                height_shift_range=0.2,
-                shear_range=0.2,
-                zoom_range=0.2,
-
+                rotation_range=aug_cfg.get("ROTATION_RANGE", 20),
+                horizontal_flip=aug_cfg.get("HORIZONTAL_FLIP", True),
+                width_shift_range=aug_cfg.get("WIDTH_SHIFT_RANGE", 0.2),
+                height_shift_range=aug_cfg.get("HEIGHT_SHIFT_RANGE", 0.2),
+                shear_range=aug_cfg.get("SHEAR_RANGE", 0.2),
+                zoom_range=aug_cfg.get("ZOOM_RANGE", 0.2),
+                brightness_range=list(aug_cfg.get("BRIGHTNESS_RANGE", [0.8, 1.2])),
+                fill_mode=aug_cfg.get("FILL_MODE", "nearest"),
             )
+            logger.info(f"Augmentation parameters: {aug}")
 
         else:
             logger.info("Configuring training generator with preprocess_input (augmentation disabled)")
@@ -75,11 +80,21 @@ class Training:
         valid_dir = self.config.training_data / "valid"
 
         logger.info(f"Loading training data from: {train_dir}")
-        self.train_generator = train_gen.flow_from_directory(Path(train_dir), shuffle=True, **flow)
+        self.train_generator = train_gen.flow_from_directory(
+            Path(train_dir),
+            shuffle=True,
+            seed=self.config.params_seed,
+            **flow
+        )
 
 
         logger.info(f"Loading validation data from: {valid_dir}")
-        self.valid_generator = valid_gen.flow_from_directory(Path(valid_dir), shuffle=False, **flow)
+        self.valid_generator = valid_gen.flow_from_directory(
+            Path(valid_dir),
+            shuffle=False,
+            seed=self.config.params_seed,
+            **flow
+        )
 
 
     @staticmethod
@@ -91,6 +106,7 @@ class Training:
 
 
     def train(self, callback_list: list = None):
+        set_seed(self.config.params_seed)
         
         if self.model is None:
             self._get_base_model()
@@ -119,6 +135,52 @@ class Training:
                 )
             ]
 
+            reduce_lr_cfg = getattr(self.config, "params_reduce_lr", {})
+            if reduce_lr_cfg and reduce_lr_cfg.get("ENABLE", False):
+                lr_scheduler = tf.keras.callbacks.ReduceLROnPlateau(
+                    monitor="val_loss",
+                    factor=float(reduce_lr_cfg.get("FACTOR", 0.5)),
+                    patience=int(reduce_lr_cfg.get("PATIENCE", 3)),
+                    min_lr=float(reduce_lr_cfg.get("MIN_LR", 1e-7)),
+                    min_delta=float(reduce_lr_cfg.get("MIN_DELTA", 0.001)),
+                    verbose=int(reduce_lr_cfg.get("VERBOSE", 1)),
+                )
+                callback_list.append(lr_scheduler)
+                logger.info(
+                    f"Configured ReduceLROnPlateau callback: factor={reduce_lr_cfg.get('FACTOR', 0.5)}, "
+                    f"patience={reduce_lr_cfg.get('PATIENCE', 3)}, min_lr={reduce_lr_cfg.get('MIN_LR', 1e-7)}"
+                )
+
+        # Resolve class weights if enabled
+        class_weight_dict = None
+        cw_cfg = self.config.params_class_weights
+        if cw_cfg and cw_cfg.get("ENABLE", False):
+            mode = str(cw_cfg.get("MODE", "balanced")).lower()
+            if mode == "balanced":
+                import numpy as np
+                classes, counts = np.unique(self.train_generator.classes, return_counts=True)
+                n_samples = len(self.train_generator.classes)
+                n_classes = len(classes)
+                class_weight_dict = {
+                    int(cls): float(n_samples / (n_classes * count))
+                    for cls, count in zip(classes, counts)
+                }
+                idx_to_class = {v: k for k, v in self.train_generator.class_indices.items()}
+                readable_cw = {idx_to_class.get(k, k): round(w, 4) for k, w in class_weight_dict.items()}
+                logger.info(f"Computed balanced class weights: {readable_cw} (indices: {class_weight_dict})")
+            elif mode == "manual":
+                custom = cw_cfg.get("CUSTOM_WEIGHTS", {})
+                class_weight_dict = {
+                    self.train_generator.class_indices[k]: float(v)
+                    for k, v in custom.items()
+                    if k in self.train_generator.class_indices
+                }
+                logger.info(f"Loaded manual class weights: {class_weight_dict}")
+            else:
+                logger.warning(f"Unknown class_weights MODE '{mode}'. Running without class weights.")
+        else:
+            logger.info("Class weights disabled (uniform 1.0 weighting)")
+
         logger.info(f"Starting training for up to {self.config.param_epochs} epochs...")
 
         history = self.model.fit(
@@ -126,6 +188,7 @@ class Training:
             epochs=self.config.param_epochs,
             validation_data=self.valid_generator,
             callbacks=callback_list,
+            class_weight=class_weight_dict
         )
 
         history_path = Path(self.config.training_model_path).parent / "history.json"

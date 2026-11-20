@@ -32,6 +32,7 @@ stages:
       - baseline_model.HEAD_TYPE
       - baseline_model.DROPOUT_RATE
       - baseline_model.UNFREEZE_FROM_LAYER
+      - baseline_model.SEED
     outs:
       - artifacts/base_line_model/base_model.h5
       - artifacts/base_line_model/updated_base_model.h5
@@ -47,9 +48,23 @@ stages:
       - baseline_model.IMAGE_SIZE
       - baseline_model.EPOCHS
       - baseline_model.BATCH_SIZE
-      - baseline_model.AUGMENTATION
       - baseline_model.LEARNING_RATE
       - baseline_model.PATIENCE
+      - baseline_model.SEED
+      - data_augmentation.ENABLE
+      - data_augmentation.ROTATION_RANGE
+      - data_augmentation.HORIZONTAL_FLIP
+      - data_augmentation.WIDTH_SHIFT_RANGE
+      - data_augmentation.HEIGHT_SHIFT_RANGE
+      - data_augmentation.SHEAR_RANGE
+      - data_augmentation.ZOOM_RANGE
+      - data_augmentation.BRIGHTNESS_RANGE
+      - class_weights.ENABLE
+      - class_weights.MODE
+      - reduce_lr.ENABLE
+      - reduce_lr.FACTOR
+      - reduce_lr.PATIENCE
+      - reduce_lr.MIN_LR
     outs:
       - artifacts/training/model.h5
 

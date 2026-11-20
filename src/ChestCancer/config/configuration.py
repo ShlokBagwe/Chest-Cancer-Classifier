@@ -75,7 +75,7 @@ class ConfigManager():
             root_dir=Path(config.root_dir),
             baseline_model_path=Path(config.baseline_model_path),
             updated_baseline_model_path=Path(config.updated_baseline_model_path),
-            params_augmentation=params.AUGMENTATION,
+            params_augmentation=bool(getattr(params, "AUGMENTATION", getattr(self.param.get("data_augmentation", {}), "ENABLE", True))),
             params_image_size=params.IMAGE_SIZE,
             params_classes=params.CLASSES,
             params_batch_size=params.BATCH_SIZE,
@@ -85,7 +85,8 @@ class ConfigManager():
             params_learning_rate=params.LEARNING_RATE,
             params_head_type=params.HEAD_TYPE,
             params_dropout_rate=float(params.DROPOUT_RATE),
-            params_unfreeze_from_layer=str(params.UNFREEZE_FROM_LAYER) if params.UNFREEZE_FROM_LAYER is not None else "None"
+            params_unfreeze_from_layer=str(params.UNFREEZE_FROM_LAYER) if params.UNFREEZE_FROM_LAYER is not None else "None",
+            params_seed=int(getattr(params, "SEED", 42))
         )
 
         return baseline_model_config
@@ -96,31 +97,49 @@ class ConfigManager():
         training_config = self.config.training
         prepare_base_model_config = self.config.prepare_base_model
         params = self.param.baseline_model
+        aug_params = self.param.data_augmentation
+        cw_params = getattr(self.param, "class_weights", {})
+        reduce_lr_params = getattr(self.param, "reduce_lr", {})
 
         create_directories([training_config.root_dir])
 
         training_config = TrainingConfig(
-            root_dir = Path(training_config.root_dir),
-            training_model_path= Path(training_config.training_model_path),
-            updated_base_model_path= Path(prepare_base_model_config.updated_baseline_model_path),
-            training_data= Path(self.config.data_preparation.prepared_dir),
-            param_epochs= params.EPOCHS,
-            params_patience= params.PATIENCE,
-            params_batch_size= params.BATCH_SIZE,
-            params_is_augmentation= params.AUGMENTATION,
-            params_image_size= params.IMAGE_SIZE,
-            params_learning_rate= params.LEARNING_RATE
+            root_dir=Path(training_config.root_dir),
+            training_model_path=Path(training_config.training_model_path),
+            updated_base_model_path=Path(prepare_base_model_config.updated_baseline_model_path),
+            training_data=Path(self.config.data_preparation.prepared_dir),
+            param_epochs=params.EPOCHS,
+            params_patience=params.PATIENCE,
+            params_batch_size=params.BATCH_SIZE,
+            params_is_augmentation=bool(aug_params.ENABLE),
+            params_image_size=params.IMAGE_SIZE,
+            params_learning_rate=params.LEARNING_RATE,
+            params_seed=int(getattr(params, "SEED", 42)),
+            params_augmentation=dict(aug_params),
+            params_class_weights=dict(cw_params),
+            params_reduce_lr=dict(reduce_lr_params)
         )
 
         return training_config
 
     
     def get_evaluation_config(self) -> EvaluationConfig:
+        combined_params = dict(self.param.baseline_model)
+        if hasattr(self.param, "data_augmentation"):
+            combined_params["aug_enable"] = self.param.data_augmentation.get("ENABLE", True)
+        if hasattr(self.param, "class_weights"):
+            combined_params["cw_enable"] = self.param.class_weights.get("ENABLE", False)
+            combined_params["cw_mode"] = self.param.class_weights.get("MODE", "balanced")
+        if hasattr(self.param, "reduce_lr"):
+            combined_params["reduce_lr_enable"] = self.param.reduce_lr.get("ENABLE", False)
+            combined_params["reduce_lr_factor"] = self.param.reduce_lr.get("FACTOR", 0.5)
+            combined_params["reduce_lr_patience"] = self.param.reduce_lr.get("PATIENCE", 3)
+
         eval_config = EvaluationConfig(
             path_to_model=Path("artifacts/training/model.h5"),
             test_data=Path("artifacts/data_preparation/prepared/test"),
             mlflow_uri="https://dagshub.com/shlokbagwe.tech/Chest-Cancer-Classifier.mlflow",
-            all_params=self.param.baseline_model,
+            all_params=combined_params,
             params_image_size=self.param.baseline_model.IMAGE_SIZE,
             params_batch_size=self.param.baseline_model.BATCH_SIZE,
         )

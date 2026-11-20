@@ -7,6 +7,7 @@ from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, Drop
 from tensorflow.keras.models import Model
 
 from ChestCancer import logger
+from ChestCancer.utils.common import set_seed
 
 
 class PrepareBaselineModel:
@@ -70,6 +71,7 @@ class PrepareBaselineModel:
 
     def update_base_model(self):
         """Building full model on top of the base model"""
+        set_seed(self.config.params_seed)
         self.full_model = self._prepare_full_model(
             model=self.model,
             classes=self.config.params_classes,

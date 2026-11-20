@@ -9,7 +9,6 @@ data_preparation:
 
 # baseline model
 baseline_model:
-  AUGMENTATION: True
   IMAGE_SIZE: [224,224,3]
   CLASSES: 4
   BATCH_SIZE: 16
@@ -20,5 +19,41 @@ baseline_model:
   PATIENCE: 5
   HEAD_TYPE: gap
   DROPOUT_RATE: 0.3
-  UNFREEZE_FROM_LAYER: block5_conv1
+  UNFREEZE_FROM_LAYER: block4_conv1
+  SEED: 49
+
+
+# data augmentation
+data_augmentation:
+  ENABLE: True
+  ROTATION_RANGE: 30
+  HORIZONTAL_FLIP: True
+  WIDTH_SHIFT_RANGE: 0.2
+  HEIGHT_SHIFT_RANGE: 0.2
+  SHEAR_RANGE: 0.2
+  ZOOM_RANGE: 0.3
+  BRIGHTNESS_RANGE: [0.8, 1.2]
+  FILL_MODE: nearest
+
+
+# class weights
+class_weights:
+  ENABLE: True
+  MODE: manual  # Options: 'balanced' (auto-computed from training distribution) or 'manual'
+  CUSTOM_WEIGHTS:
+    adenocarcinoma: 1.0
+    large_cell: 0.6
+    normal: 1.0
+    squamous_cell: 1.2
+
+
+# learning rate reduction on plateau
+reduce_lr:
+  ENABLE: False
+  FACTOR: 0.5        # Multiplier to reduce learning rate: new_lr = lr * factor
+  PATIENCE: 2        # Number of epochs with no improvement before reducing LR
+  MIN_LR: 1e-7       # Lower bound on learning rate
+  MIN_DELTA: 0.001   # Threshold for measuring new optimum
+  VERBOSE: 1
+
 
