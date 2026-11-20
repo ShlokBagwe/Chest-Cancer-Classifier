@@ -129,6 +129,10 @@ How to read a result:
 | 23 | Add `ReduceLROnPlateau` hyperparameter block in `params.yaml` | Dynamically decay learning rate (factor 0.5, patience 3) when validation loss plateaus | Prevents optimization oscillation and allows fine-tuning into deeper minima before EarlyStopping |
 | 24 | Disable `ReduceLROnPlateau` / Retain constant LR 1e-5 | Trial R9 showed severe degradation: accuracy dropped 10% (79.55% -> 69.52%), loss rose to 0.711 | Set `reduce_lr.ENABLE: False`. The 1e-5 LR is already minimal; further decaying on small/noisy val set halts gradient flow. |
 | 25 | Unfreeze from `block4_conv1` onwards (`params.yaml`) | Block 5 alone limited mid-level CT texture feature adaptation | Unfreezes 8 conv layers across blocks 4 and 5; test accuracy crossed 81% (81.04%), test loss dropped to 0.5132, Macro F1 reached 0.8283. |
+| 26 | Dedicated `training/best_model/` milestone archiving | Routine training runs overwrite `artifacts/training/model.h5`. Need safe persistence for champion models. | Established `artifacts/training/best_model/` (symlinked as `training/best_model/`). Current best model saved as `model_v1.h5` (81.04% acc, 0.4800 loss). Subsequent milestone models that beat it will be saved as `model_v2.h5`, etc. |
+| 27 | Automated champion promotion in `Evaluation.archive_if_best()` | Manual versioning is error-prone and easy to forget during iterative training runs. | Embedded automatic champion detection in evaluation stage. If newly trained model outperforms benchmark (higher accuracy, or tied accuracy with lower loss), it automatically archives as `model_v{N}.h5`, generates `model_v{N}_metrics.json`, and updates `champion_manifest.json`. If not, `model.h5` remains overwritten while `best_model/` is preserved. |
+
+
 
 ## 8. Working rules
 

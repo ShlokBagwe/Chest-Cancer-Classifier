@@ -126,14 +126,28 @@ class ConfigManager():
     def get_evaluation_config(self) -> EvaluationConfig:
         combined_params = dict(self.param.baseline_model)
         if hasattr(self.param, "data_augmentation"):
-            combined_params["aug_enable"] = self.param.data_augmentation.get("ENABLE", True)
+            aug = self.param.data_augmentation
+            combined_params["ROTATION_RANGE"] = aug.get("ROTATION_RANGE", 20)
+            combined_params["ZOOM_RANGE"] = aug.get("ZOOM_RANGE", 0.2)
+            combined_params["HORIZONTAL_FLIP"] = aug.get("HORIZONTAL_FLIP", True)
+            combined_params["WIDTH_SHIFT_RANGE"] = aug.get("WIDTH_SHIFT_RANGE", 0.2)
+            combined_params["HEIGHT_SHIFT_RANGE"] = aug.get("HEIGHT_SHIFT_RANGE", 0.2)
+            combined_params["SHEAR_RANGE"] = aug.get("SHEAR_RANGE", 0.2)
+            combined_params["BRIGHTNESS_RANGE"] = aug.get("BRIGHTNESS_RANGE", [0.8, 1.2])
+            combined_params["FILL_MODE"] = aug.get("FILL_MODE", "nearest")
+            combined_params["aug_enable"] = aug.get("ENABLE", True)
         if hasattr(self.param, "class_weights"):
-            combined_params["cw_enable"] = self.param.class_weights.get("ENABLE", False)
-            combined_params["cw_mode"] = self.param.class_weights.get("MODE", "balanced")
+            cw = self.param.class_weights
+            combined_params["cw_enable"] = cw.get("ENABLE", False)
+            combined_params["cw_mode"] = cw.get("MODE", "manual")
+            if "CUSTOM_WEIGHTS" in cw:
+                combined_params["CLASS_WEIGHTS"] = dict(cw.CUSTOM_WEIGHTS)
         if hasattr(self.param, "reduce_lr"):
-            combined_params["reduce_lr_enable"] = self.param.reduce_lr.get("ENABLE", False)
-            combined_params["reduce_lr_factor"] = self.param.reduce_lr.get("FACTOR", 0.5)
-            combined_params["reduce_lr_patience"] = self.param.reduce_lr.get("PATIENCE", 3)
+            rlr = self.param.reduce_lr
+            combined_params["reduce_lr_enable"] = rlr.get("ENABLE", False)
+            combined_params["reduce_lr_factor"] = rlr.get("FACTOR", 0.5)
+            combined_params["reduce_lr_patience"] = rlr.get("PATIENCE", 3)
+            combined_params["reduce_lr_min_lr"] = rlr.get("MIN_LR", 1e-7)
 
         eval_config = EvaluationConfig(
             path_to_model=Path("artifacts/training/model.h5"),
@@ -142,6 +156,7 @@ class ConfigManager():
             all_params=combined_params,
             params_image_size=self.param.baseline_model.IMAGE_SIZE,
             params_batch_size=self.param.baseline_model.BATCH_SIZE,
+            best_model_dir=Path(getattr(self.config.training, "best_model_dir", "artifacts/training/best_model")),
         )
         return eval_config
 

@@ -20,18 +20,18 @@ baseline_model:
   HEAD_TYPE: gap
   DROPOUT_RATE: 0.3
   UNFREEZE_FROM_LAYER: block4_conv1
-  SEED: 49
+  SEED: 123
 
 
 # data augmentation
 data_augmentation:
   ENABLE: True
-  ROTATION_RANGE: 30
+  ROTATION_RANGE: 10
   HORIZONTAL_FLIP: True
   WIDTH_SHIFT_RANGE: 0.2
   HEIGHT_SHIFT_RANGE: 0.2
   SHEAR_RANGE: 0.2
-  ZOOM_RANGE: 0.3
+  ZOOM_RANGE: 0.1
   BRIGHTNESS_RANGE: [0.8, 1.2]
   FILL_MODE: nearest
 

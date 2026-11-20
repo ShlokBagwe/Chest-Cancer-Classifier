@@ -2,4 +2,7 @@ about_project.md
 artifacts
 artifacts_temp
 model/
+inputImage.jpg
+*.pyc
+__pycache__/
 

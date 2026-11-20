@@ -65,7 +65,7 @@ stages:
         - 3
         baseline_model.INCLUDE_TOP: false
         baseline_model.LEARNING_RATE: 1e-05
-        baseline_model.SEED: 49
+        baseline_model.SEED: 123
         baseline_model.UNFREEZE_FROM_LAYER: block4_conv1
         baseline_model.WEIGHTS: imagenet
     outs:
@@ -75,14 +75,14 @@ stages:
       size: 58926616
     - path: artifacts/base_line_model/updated_base_model.h5
       hash: md5
-      md5: 2e9795b80c9365e5ae8a4114a727c418
+      md5: 2919d07d029558878948a3a4f36c8d4c
       size: 58958424
   model_trainer:
     cmd: python src/ChestCancer/pipeline/stage_04_model_trainer.py
     deps:
     - path: artifacts/base_line_model/updated_base_model.h5
       hash: md5
-      md5: 2e9795b80c9365e5ae8a4114a727c418
+      md5: 2919d07d029558878948a3a4f36c8d4c
       size: 58958424
     - path: artifacts/data_preparation/prepared
       hash: md5
@@ -107,7 +107,7 @@ stages:
         - 3
         baseline_model.LEARNING_RATE: 1e-05
         baseline_model.PATIENCE: 5
-        baseline_model.SEED: 49
+        baseline_model.SEED: 123
         class_weights.ENABLE: true
         class_weights.MODE: manual
         data_augmentation.BRIGHTNESS_RANGE:
@@ -116,10 +116,10 @@ stages:
         data_augmentation.ENABLE: true
         data_augmentation.HEIGHT_SHIFT_RANGE: 0.2
         data_augmentation.HORIZONTAL_FLIP: true
-        data_augmentation.ROTATION_RANGE: 20
+        data_augmentation.ROTATION_RANGE: 10
         data_augmentation.SHEAR_RANGE: 0.2
         data_augmentation.WIDTH_SHIFT_RANGE: 0.2
-        data_augmentation.ZOOM_RANGE: 0.2
+        data_augmentation.ZOOM_RANGE: 0.1
         reduce_lr.ENABLE: false
         reduce_lr.FACTOR: 0.5
         reduce_lr.MIN_LR: 1e-07
@@ -127,7 +127,7 @@ stages:
     outs:
     - path: artifacts/training/model.h5
       hash: md5
-      md5: d2c723ebf7a2e038ff54b0bce4327b67
+      md5: 0b95101ad246852354f342371b22d8f1
       size: 162821416
   evaluation:
     cmd: python src/ChestCancer/pipeline/stage_05_evaluation.py
@@ -139,7 +139,7 @@ stages:
       nfiles: 847
     - path: artifacts/training/model.h5
       hash: md5
-      md5: d2c723ebf7a2e038ff54b0bce4327b67
+      md5: 0b95101ad246852354f342371b22d8f1
       size: 162821416
     - path: config/config.yaml
       hash: md5
@@ -159,5 +159,5 @@ stages:
     outs:
     - path: scores.json
       hash: md5
-      md5: 4213a5bd524577d9e7b5e438b80c1869
-      size: 1276
+      md5: d32ed6519478ea02abf09ee54fc62153
+      size: 1259
